@@ -1,5 +1,4 @@
 # Numerical Methouds
-
 Functions for Matlab that were developed in class
 
 ### Days Elapsed
