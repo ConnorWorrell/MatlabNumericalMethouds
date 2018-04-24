@@ -14,7 +14,7 @@ function [t,y] = Heun(dydt, tspan, y0, h, es, maxit)
 %   y - y value of final output
 
 close all;
-ode45(dydt,tspan,y0);
+%ode45(dydt,tspan,y0);
 
 %Make sure the minimum nuber of inputs are used
 if(nargin < 4)
@@ -57,7 +57,7 @@ for t = temp(1:length(temp)-1)
     LstAvgSlp = AvgSlope*10000;
     while(Error > es && Iter < maxit)
         SlopeRight = dydt(t+h,y+AvgSlope*h);
-        AvgSlope = (1/2)*(SlopeRight + SlopeLeft);
+        AvgSlope = (1/2)*(AvgSlope + SlopeLeft);
         Iter = Iter + 1;
         Error = abs((AvgSlope - LstAvgSlp)/AvgSlope)*100;
         LstAvgSlp = AvgSlope;
@@ -72,15 +72,14 @@ for t = temp(1:length(temp)-1)
     yvalues(length(yvalues)+1)=y;
 end
 
-if(exist('LastBit','var'))
-    t = temp(length(temp));
+if(exist(LastBit,'var'))
     h = LastBit - temp(length(temp));
     SlopeLeft = dydt(t,y);
     AvgSlope = SlopeLeft;
     LstAvgSlp = AvgSlope*10000;
     while(Error > es && Iter < maxit)
         SlopeRight = dydt(t+h,y+AvgSlope*h);
-        AvgSlope = (1/2)*(SlopeRight + SlopeLeft);
+        AvgSlope = (1/2)*(AvgSlope + SlopeLeft);
         Iter = Iter + 1;
         Error = abs((AvgSlope - LstAvgSlp)/AvgSlope)*100;
         LstAvgSlp = AvgSlope;
@@ -89,14 +88,7 @@ if(exist('LastBit','var'))
         plot(t+h,y+AvgSlope*h,'*')
     end
     y = y + AvgSlope*h;
-    yvalues(length(yvalues)+1) = y;
     temp(length(temp)+1) = LastBit;
-end
-
-t = temp;
-y = yvalues;
-
-plot(t,y);
 
 end
 
