@@ -13,8 +13,8 @@ function [t,y] = Heun(dydt, tspan, y0, h, es, maxit)
 %   t - t value of final output
 %   y - y value of final output
 
-close all;
-ode45(dydt,tspan,y0);
+%close all;
+%ode45(dydt,tspan,y0);
 
 %Make sure the minimum nuber of inputs are used
 if(nargin < 4)
@@ -63,7 +63,7 @@ for t = temp(1:length(temp)-1)
         LstAvgSlp = AvgSlope;
         %fprintf("Left: %.3f Right: %.3f Avg: %.3f Iter: %.0f Error: %.5f\n", SlopeLeft, SlopeRight, AvgSlope, Iter, Error);
         fprintf("t: %.2f y: %.2f\n", t+h, y+AvgSlope*h);
-        plot(t+h,y+AvgSlope*h,'*')
+        %plot(t+h,y+AvgSlope*h,'*')
     end
     y = y + AvgSlope*h;
     Error = es + 1;
@@ -86,7 +86,7 @@ if(exist('LastBit','var'))
         LstAvgSlp = AvgSlope;
         %fprintf("Left: %.3f Right: %.3f Avg: %.3f Iter: %.0f Error: %.5f\n", SlopeLeft, SlopeRight, AvgSlope, Iter, Error);
         fprintf("t: %.2f y: %.2f\n", t+h, y+AvgSlope*h);
-        plot(t+h,y+AvgSlope*h,'*')
+        %plot(t+h,y+AvgSlope*h,'*')
     end
     y = y + AvgSlope*h;
     yvalues(length(yvalues)+1) = y;
@@ -97,6 +97,8 @@ t = temp;
 y = yvalues;
 
 plot(t,y);
+
+hold off
 
 end
 
